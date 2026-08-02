@@ -418,7 +418,7 @@
     var items = [];
 
     function bind(el) {
-      var item = { el: el, x: 0, y: 0, tx: 0, ty: 0, active: false };
+      var item = { el: el, x: 0, y: 0, tx: 0, ty: 0, active: false, set: false };
       var pad = 26;
 
       function enter() { item.active = true; }
@@ -443,16 +443,24 @@
       items.push(item);
     }
 
+    /* نكتب متغيّرات CSS لا transform مباشرة، وإلا مُسح أي تحويل أساسي
+       على العنصر — مثل translate(-50%,-50%) الذي يوسّط زرّ التشغيل */
     function frame(dt) {
       for (var i = 0; i < items.length; i++) {
         var it = items[i];
         it.x = damp(it.x, it.tx, 0.18, dt);
         it.y = damp(it.y, it.ty, 0.18, dt);
         if (Math.abs(it.x) < 0.02 && Math.abs(it.y) < 0.02 && !it.active) {
-          if (it.el.style.transform) it.el.style.transform = '';
+          if (it.set) {
+            it.el.style.removeProperty('--mx');
+            it.el.style.removeProperty('--my');
+            it.set = false;
+          }
           continue;
         }
-        it.el.style.transform = 'translate3d(' + it.x.toFixed(2) + 'px,' + it.y.toFixed(2) + 'px,0)';
+        it.el.style.setProperty('--mx', it.x.toFixed(2) + 'px');
+        it.el.style.setProperty('--my', it.y.toFixed(2) + 'px');
+        it.set = true;
       }
     }
 
@@ -798,6 +806,120 @@
     };
   })();
 
+  /* ─────────────────────────────────────────────
+     فيديو الواجهة — تشغيل تلقائي صامت + مفتاح صوت
+     ───────────────────────────────────────────── */
+  var Video = (function () {
+    function stamp(sec) {
+      if (!isFinite(sec)) return '';
+      var m = Math.floor(sec / 60), s = Math.round(sec % 60);
+      if (s === 60) { m++; s = 0; }
+      return toArabic(('0' + m).slice(-2)) + ':' + toArabic(('0' + s).slice(-2));
+    }
+
+    /* هل نُحمّل الفيديو تلقائيًا؟ القرار يوازن بين أثر الواجهة
+       وبين بيانات الزائر — الملف يُحمّل كاملًا عند كل زيارة. */
+    function autoAllowed() {
+      if (isReduced()) return false;                 /* تفضيل صريح لتقليل الحركة */
+
+      var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (c) {
+        if (c.saveData) return false;                /* وضع توفير البيانات مفعّل */
+        var t = c.effectiveType;
+        if (t === 'slow-2g' || t === '2g' || t === '3g') return false;
+      }
+
+      /* الجوال غالبًا على بيانات محدودة — وإن غاب connection نحتاط */
+      if (isTouch() || window.innerWidth < 820) return false;
+
+      return true;
+    }
+
+    function setup(box) {
+      var v = $('[data-video-el]', box);
+      if (!v) return;
+      var btn   = $('[data-video-btn]', box);
+      var label = $('[data-video-label]', box);
+      var bar   = $('[data-video-bar]', box);
+      var time  = $('[data-video-time]', box);
+      var src   = v.getAttribute('data-src');
+      if (!src) return;
+
+      var loaded = false;
+      var visible = true;
+
+      function load() {
+        if (loaded) return;
+        loaded = true;
+        v.preload = 'auto';
+        v.src = src;
+      }
+
+      function play() {
+        var p = v.play();
+        if (p && p.catch) p.catch(function () { box.classList.remove('is-live'); });
+      }
+
+      v.addEventListener('loadeddata', function () { box.classList.add('is-ready'); });
+      v.addEventListener('loadedmetadata', function () {
+        if (time) time.textContent = stamp(v.duration);
+      });
+      /* التشغيل الفعلي هو الحكم الوحيد على حالة الزرّ */
+      v.addEventListener('playing', function () {
+        box.classList.add('is-ready', 'is-live');
+        if (label) label.textContent = v.muted ? 'الصوت' : 'كتم';
+        if (btn) btn.setAttribute('aria-label', v.muted ? 'تشغيل الصوت' : 'كتم الصوت');
+      });
+
+      /* ── المسار التلقائي ── */
+      if (autoAllowed()) {
+        v.muted = true;
+        v.defaultMuted = true;
+        load();
+        play();
+      }
+
+      /* ── الزرّ ── تشغيل يدوي قبل البدء، ومفتاح صوت بعده ── */
+      if (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (!box.classList.contains('is-live')) {
+            /* نقرة صريحة من المستخدم ⇒ يُسمح بالصوت */
+            v.muted = false;
+            box.classList.add('is-sound');
+            load();
+            play();
+            return;
+          }
+          v.muted = !v.muted;
+          box.classList.toggle('is-sound', !v.muted);
+          if (label) label.textContent = v.muted ? 'الصوت' : 'كتم';
+          btn.setAttribute('aria-label', v.muted ? 'تشغيل الصوت' : 'كتم الصوت');
+        });
+      }
+
+      /* يوقف التشغيل خارج الشاشة — لا فائدة من فكّ ترميز لا يراه أحد.
+         لا يُشغّل ما لم يكن قد بدأ فعلًا، حتى لا يتجاوز قرار الشرط. */
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          visible = en[0].isIntersecting;
+          if (!loaded) return;
+          if (visible) { if (v.paused) play(); }
+          else if (!v.paused) v.pause();
+        }, { threshold: 0.05 }).observe(box);
+      }
+
+      if (bar) {
+        Ticker.add(function () {
+          if (!loaded || !v.duration || !isFinite(v.duration)) return;
+          bar.style.transform = 'scaleX(' + clamp(v.currentTime / v.duration, 0, 1).toFixed(4) + ')';
+        });
+      }
+    }
+
+    return { init: function () { $$('[data-video]').forEach(setup); } };
+  })();
+
   /* اختيار الشرائح في نموذج التواصل */
   var Chips = (function () {
     return {
@@ -961,6 +1083,7 @@
     Accordion.init();
     Drag.init();
     Chips.init();
+    Video.init();
     Feature.init();
     Parallax.init();
     Progress.init();

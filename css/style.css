@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   مدار — استوديو رقمي إبداعي
+   نون الاحترافية — Noon Professionals
    نظام الأنماط الكامل · RTL
    ─────────────────────────────────────────────────────────
    01 · الرموز والأساس        07 · الأعمال
@@ -11,23 +11,59 @@
    ═══════════════════════════════════════════════════════════ */
 
 /* ─────────────────────────────────────────────
+   00 · خطوط الهوية — itf Ghroob Arabic
+   يغطّي العربية واللاتينية معًا حسب دليل العلامة
+   ───────────────────────────────────────────── */
+@font-face{
+  font-family:"Ghroob";
+  src:url("../assets/fonts/itfGhroobArabic-Light.otf") format("opentype");
+  font-weight:300; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"Ghroob";
+  src:url("../assets/fonts/itfGhroobArabic-Regular.otf") format("opentype");
+  font-weight:400; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"Ghroob";
+  src:url("../assets/fonts/itfGhroobArabic-Medium.otf") format("opentype");
+  font-weight:500; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"Ghroob";
+  src:url("../assets/fonts/itfGhroobArabic-Bold.otf") format("opentype");
+  font-weight:600 700; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"Ghroob";
+  src:url("../assets/fonts/itfGhroobArabic-ExtraBold.otf") format("opentype");
+  font-weight:800; font-style:normal; font-display:swap;
+}
+
+/* ─────────────────────────────────────────────
    01 · الرموز والأساس
    ───────────────────────────────────────────── */
 :root{
+  /* ألوان العلامة الرسمية:
+     أساسي  #000000 · #24baa9 · #4dbd99
+     ثانوي  #231f20 · #404041                     */
   --bg:#ffffff;
-  --ink:#0a0a0a;
-  --ink-70:rgba(10,10,10,.62);
-  --ink-40:rgba(10,10,10,.36);
-  --ink-12:rgba(10,10,10,.12);
-  --ink-06:rgba(10,10,10,.06);
+  --ink:#231f20;
+  --ink-70:rgba(35,31,32,.64);
+  --ink-40:rgba(35,31,32,.40);
+  --ink-12:rgba(35,31,32,.13);
+  --ink-06:rgba(35,31,32,.06);
 
-  --inv-bg:#0a0a0a;
-  --inv-ink:#f5f4f2;
-  --inv-70:rgba(245,244,242,.60);
-  --inv-40:rgba(245,244,242,.34);
-  --inv-12:rgba(245,244,242,.14);
+  --inv-bg:#000000;
+  --inv-ink:#ffffff;
+  --inv-70:rgba(255,255,255,.62);
+  --inv-40:rgba(255,255,255,.38);
+  --inv-12:rgba(255,255,255,.15);
 
-  --accent:#5b4dff;
+  --accent:#24baa9;
+  --accent-2:#4dbd99;
+  --brand-grad:linear-gradient(115deg,#24baa9 0%,#4dbd99 100%);
+  --muted:#404041;
 
   --pad:clamp(1.25rem, 4.2vw, 4.5rem);
   --sec:clamp(5.5rem, 12vw, 11.5rem);
@@ -59,7 +95,7 @@ html{
 html.is-locked{overflow:hidden;touch-action:none}
 
 body{
-  font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  font-family:"Ghroob","Segoe UI",Tahoma,system-ui,sans-serif;
   font-size:var(--fs-body);
   font-weight:400;
   line-height:1.72;
@@ -75,7 +111,7 @@ img,svg,video{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0}
 ol,ul{list-style:none}
-::selection{background:var(--ink);color:var(--bg)}
+::selection{background:var(--accent);color:var(--inv-bg)}
 
 .md-wrap{
   width:100%;
@@ -388,13 +424,7 @@ html.no-loader .md-loader{display:none}
   width:min(34rem,72vw);
   text-align:center;
 }
-.md-loader__mark{
-  overflow:hidden;
-  font-size:clamp(2rem,5vw,3.25rem);
-  font-weight:500;
-  letter-spacing:-.02em;
-  line-height:1.3;
-}
+.md-loader__mark{overflow:hidden;line-height:0}
 .md-loader__mark span{
   display:block;
   transform:translate3d(0,110%,0);
@@ -455,19 +485,34 @@ body.is-menu .md-head{color:var(--inv-ink);background:none;backdrop-filter:none;
   gap:clamp(1rem,3vw,3rem);
 }
 
+/* الشعار يُرسم كقناع فوق لون النص، فيقلب لونه تلقائيًا
+   فوق الأقسام الداكنة دون تبديل ملف أو تضمين SVG في كل صفحة */
 .md-logo{
   display:inline-flex;
   align-items:center;
-  gap:.55rem;
-  font-size:1.18rem;
-  font-weight:600;
-  letter-spacing:-.01em;
+  flex:none;
 }
-.md-logo__glyph{
-  width:1.55rem;height:1.55rem;
-  transition:transform .9s var(--e);
+.md-logo__mark{
+  display:block;
+  height:2.05rem;
+  aspect-ratio:674/264;
+  background-color:currentColor;
+  -webkit-mask:url("../assets/brand/noon-mark.svg") center/contain no-repeat;
+  mask:url("../assets/brand/noon-mark.svg") center/contain no-repeat;
+  transition:opacity .45s var(--e);
 }
-.md-logo:hover .md-logo__glyph{transform:rotate(180deg)}
+.md-logo:hover .md-logo__mark{opacity:.55}
+
+/* اللوحة الكاملة (مع كلمة PROFESSIONALS) للتذييل وشاشة التحميل */
+.md-logo__lockup{
+  display:block;
+  height:4.5rem;
+  aspect-ratio:674/338;
+  margin-inline:auto;
+  background-color:currentColor;
+  -webkit-mask:url("../assets/brand/noon-lockup.svg") center/contain no-repeat;
+  mask:url("../assets/brand/noon-lockup.svg") center/contain no-repeat;
+}
 
 .md-nav{
   margin-inline-start:auto;
@@ -534,7 +579,7 @@ a:hover [data-link-swap] .sw-b{transform:translate3d(0,0,0)}
   content:"";
   position:absolute;
   inset:0;
-  background:var(--accent);
+  background:var(--brand-grad);
   transform:translate3d(0,101%,0);
   border-start-start-radius:50% 60%;
   border-start-end-radius:50% 60%;
@@ -542,6 +587,8 @@ a:hover [data-link-swap] .sw-b{transform:translate3d(0,0,0)}
   z-index:-1;
 }
 .md-btn:hover::before{transform:translate3d(0,0,0);border-radius:0}
+/* أسود على التيل: النص صغير ويحتاج تباينًا كافيًا (الأبيض على #24baa9 لا يكفي) */
+.md-btn:hover{color:var(--inv-bg)}
 .md-btn span{position:relative;z-index:1}
 .md-btn--sm{--bh:2.85rem;padding-inline:1.35rem;font-size:.86rem}
 .md-btn--ghost{
@@ -729,6 +776,61 @@ body.is-menu .md-burger i:nth-child(2){transform:translateX(-50%) translateY(-3.
   position:absolute;
   inset:-8% 0;
   height:116%;
+  transition:opacity .7s var(--e);
+}
+
+/* ── الفيديو ── لا يُحمّل إلا بالنقر (preload="none") */
+.md-preview__video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;         /* الفيديو 16:9 والإطار أعرض — يُقصّ من الأعلى والأسفل */
+  z-index:3;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .9s var(--e);
+}
+/* الفيديو يظهر فور جاهزية أول إطار، فتختفي اللوحة البديلة تحته */
+.md-preview__box.is-ready .md-preview__video{opacity:1}
+.md-preview__box.is-ready .md-poster{opacity:0}
+.md-play{transition:opacity .5s var(--e),transform .7s var(--e),color .45s var(--e)}
+.md-preview__glass{transition:opacity .5s var(--e)}
+
+/* أيقونات الزرّ الثلاث — تظهر واحدة حسب حالة المربع
+   الافتراضي «تشغيل» حتى يقرّر الجافاسكربت، فلا وميض ولا حالة كاذبة */
+.md-play__ico{
+  position:absolute;
+  width:1.3rem;
+  inset-block-end:30%;
+  opacity:0;
+  transition:opacity .3s var(--e);
+}
+.md-play__ico--play{opacity:1}
+.md-preview__box.is-live .md-play__ico--play{opacity:0}
+.md-preview__box.is-live .md-play__ico--mute{opacity:1}
+.md-preview__box.is-live.is-sound .md-play__ico--mute{opacity:0}
+.md-preview__box.is-live.is-sound .md-play__ico--sound{opacity:1}
+
+/* شريط تقدّم رفيع أسفل الفيديو */
+.md-preview__bar{
+  position:absolute;
+  inset-block-end:0;
+  inset-inline:0;
+  height:3px;
+  z-index:5;
+  background:rgba(255,255,255,.18);
+  opacity:0;
+  transition:opacity .5s var(--e);
+}
+.md-preview__box.is-ready .md-preview__bar{opacity:1}
+.md-preview__bar i{
+  display:block;
+  height:100%;
+  width:100%;
+  background:var(--brand-grad);
+  transform:scaleX(0);
+  transform-origin:right center;
 }
 .md-preview__glass{
   position:absolute;
@@ -750,11 +852,14 @@ body.is-menu .md-burger i:nth-child(2){transform:translateX(-50%) translateY(-3.
 }
 .md-preview__time{opacity:.6;font-variant-numeric:tabular-nums}
 
+/* المغناطيس يمرّر إزاحته عبر ‎--mx/--my‎ فتتركّب مع أي تحويل أساسي */
+[data-magnetic]{transform:translate3d(var(--mx,0),var(--my,0),0)}
+
 .md-play{
   position:absolute;
   top:50%;
   left:50%;                 /* فيزيائي ليطابق translate الفيزيائي */
-  transform:translate(-50%,-50%);
+  transform:translate(-50%,-50%) translate3d(var(--mx,0),var(--my,0),0);
   z-index:5;
   width:clamp(6rem,10vw,8.5rem);
   aspect-ratio:1;
@@ -791,12 +896,8 @@ body.is-menu .md-burger i:nth-child(2){transform:translateX(-50%) translateY(-3.
   transform:translateY(-.55rem);
   transition:color .45s var(--e);
 }
-.md-play svg{
-  position:absolute;
-  width:1.15rem;
-  inset-block-end:32%;
-  transform:scaleX(-1);
-}
+/* لا قاعدة عامة على ‎.md-play svg‎ — تخصيصها (0,1,1) كان يغلب قواعد
+   الأيقونات ويعكسها بـ scaleX(-1) المخصّص أصلًا لمثلّث التشغيل */
 
 /* ─────────────────────────────────────────────
    06 · نظرة عامة · الخدمات · الشريط
@@ -907,6 +1008,45 @@ body.is-menu .md-burger i:nth-child(2){transform:translateX(-50%) translateY(-3.
 .md-marquee__sep{
   font-size:clamp(.8rem,1.4vw,1.15rem);
   color:var(--ink-40);
+}
+
+/* ─── شعارات العملاء داخل الشريط ───
+   مسارات الملفات تُعرَّف هنا لا في سمة style بالصفحة:
+   ‎url()‎ داخل متغيّر CSS يُحلّ نسبةً إلى ملف الأنماط الذي يستخدمه،
+   لا نسبةً إلى صفحة HTML — فكان يشير إلى ‎css/assets/…‎ ويسقط.
+
+   لإضافة عميل جديد: صنف هنا + span في الصفحة.
+   ‎--r‎ نسبة الأبعاد من viewBox · ‎--k‎ موازنة بصرية للارتفاع. */
+.md-marquee__logo{
+  --logo-h:clamp(2.1rem,4vw,3.4rem);
+  display:block;
+  flex:none;
+  height:calc(var(--logo-h) * var(--k,1));
+  aspect-ratio:var(--r,1);
+  background-color:currentColor;
+  color:var(--ink-70);
+  -webkit-mask-position:center;
+  mask-position:center;
+  -webkit-mask-size:contain;
+  mask-size:contain;
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+  transition:color .45s var(--e);
+}
+.md-marquee:hover .md-marquee__logo{color:var(--ink)}
+.md-inverse .md-marquee__logo{color:var(--inv-70)}
+
+.md-marquee__logo--assaf{
+  --r:948.62/985.49;
+  --k:.88;                  /* شبه مربّع — يُخفَّض قليلًا ليوازن الشعار العريض */
+  -webkit-mask-image:url("../assets/clients/assaf.svg");
+  mask-image:url("../assets/clients/assaf.svg");
+}
+.md-marquee__logo--lavearn{
+  --r:1495.25/962.54;
+  --k:1;
+  -webkit-mask-image:url("../assets/clients/lavearn.svg");
+  mask-image:url("../assets/clients/lavearn.svg");
 }
 
 /* ─────────────────────────────────────────────
