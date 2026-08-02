@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مدار — استوديو رقمي إبداعي</title>
+<meta name="description" content="مدار استوديو إبداعي يصمم ويبني الهويات والمنتجات الرقمية للعلامات التي تسعى إلى حضور استثنائي.">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>
+/* يُرسم ستار الانتقال قبل أول إطار لمنع أي وميض بين الصفحات */
+(function(){try{if(sessionStorage.getItem('md-transit')==='1'){document.documentElement.classList.add('is-entering');}}catch(e){}})();
+</script>
+</head>
+<body class="md-page" data-page="home">
+
+<!-- ══ ستار الانتقال بين الصفحات ══ -->
+<div class="md-curtain" aria-hidden="true"><span class="md-curtain__panel"></span></div>
+
+<!-- ══ شاشة التحميل ══ -->
+<div class="md-loader" aria-hidden="true">
+  <div class="md-loader__inner">
+    <div class="md-loader__mark"><span>مدار</span></div>
+    <div class="md-loader__bar"><i></i></div>
+    <div class="md-loader__num"><span data-loader-num>0</span><em>٪</em></div>
+  </div>
+</div>
+
+<!-- ══ المؤشر المخصص ══ -->
+<div class="md-cursor" aria-hidden="true">
+  <div class="md-cursor__inner">
+    <span class="md-cursor__dot"></span>
+    <span class="md-cursor__ring"></span>
+    <span class="md-cursor__label"></span>
+    <span class="md-cursor__media"><i class="md-cursor__media-box"></i></span>
+    <svg class="md-cursor__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</div>
+
+<!-- ══ الترويسة ══ -->
+<header class="md-head">
+  <div class="md-head__row">
+    <a href="index.html" class="md-logo" data-cursor="pointer" aria-label="مدار — الصفحة الرئيسية">
+      <svg class="md-logo__glyph" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="14.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        <circle cx="16" cy="16" r="5" fill="currentColor"/>
+      </svg>
+      <span class="md-logo__word">مدار</span>
+    </a>
+
+    <nav class="md-nav" aria-label="التنقل الرئيسي">
+      <a href="services.html" data-cursor="pointer"><span data-link-swap>الخدمات</span></a>
+      <a href="work.html" data-cursor="pointer"><span data-link-swap>الأعمال</span></a>
+      <a href="about.html" data-cursor="pointer"><span data-link-swap>عن مدار</span></a>
+      <a href="blog.html" data-cursor="pointer"><span data-link-swap>المدونة</span></a>
+    </nav>
+
+    <a href="contact.html" class="md-btn md-btn--sm md-head__cta" data-magnetic data-cursor="hidden">
+      <span>لنبدأ مشروعًا</span>
+    </a>
+
+    <button class="md-burger" type="button" aria-label="فتح القائمة" aria-expanded="false" data-cursor="hidden" data-magnetic>
+      <i></i><i></i>
+    </button>
+  </div>
+</header>
+
+<!-- ══ القائمة الكاملة ══ -->
+<div class="md-menu" aria-hidden="true">
+  <div class="md-menu__bg"></div>
+  <div class="md-menu__body">
+    <nav class="md-menu__nav">
+      <a href="index.html" data-cursor="pointer"><span class="md-menu__idx">01</span><span class="md-menu__txt" data-link-swap>الرئيسية</span></a>
+      <a href="services.html" data-cursor="pointer"><span class="md-menu__idx">02</span><span class="md-menu__txt" data-link-swap>الخدمات</span></a>
+      <a href="work.html" data-cursor="pointer"><span class="md-menu__idx">03</span><span class="md-menu__txt" data-link-swap>الأعمال</span></a>
+      <a href="about.html" data-cursor="pointer"><span class="md-menu__idx">04</span><span class="md-menu__txt" data-link-swap>عن مدار</span></a>
+      <a href="blog.html" data-cursor="pointer"><span class="md-menu__idx">05</span><span class="md-menu__txt" data-link-swap>المدونة</span></a>
+      <a href="contact.html" data-cursor="pointer"><span class="md-menu__idx">06</span><span class="md-menu__txt" data-link-swap>تواصل معنا</span></a>
+    </nav>
+    <div class="md-menu__aside">
+      <div class="md-menu__col">
+        <span class="md-menu__cap">تواصل</span>
+        <a href="mailto:hello@madar.studio" data-cursor="pointer">hello@madar.studio</a>
+        <a href="tel:+966500000000" data-cursor="pointer">‎+966 50 000 0000</a>
+      </div>
+      <div class="md-menu__col">
+        <span class="md-menu__cap">تابعنا</span>
+        <a href="#" data-cursor="pointer">Behance</a>
+        <a href="#" data-cursor="pointer">Dribbble</a>
+        <a href="#" data-cursor="pointer">Instagram</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ حاوية التمرير الناعم ══ -->
+<div class="md-scroll" data-scroll-root>
+<div class="md-scroll__inner" data-scroll-inner>
+
+<main class="md-main">
+
+  <!-- ─── 01 · البطل ─── -->
+  <section class="md-hero">
+    <div class="md-wrap">
+      <h1 class="md-hero__title" data-anim="lines" data-anim-delay="0">
+        نصنع تجارب رقمية<br>تترك أثرًا حقيقيًا
+      </h1>
+      <div class="md-hero__foot">
+        <p class="md-hero__lead" data-anim="lines" data-anim-delay="0.18">
+          مدار استوديو إبداعي يصمّم ويبني الهويات والمنتجات الرقمية للعلامات التي لا تكتفي بالمألوف.
+        </p>
+        <div class="md-hero__hint" data-anim="fade" data-anim-delay="0.4">
+          <span class="md-hero__hintline"><i></i></span>
+          <span>مرّر للأسفل</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 02 · العرض التقديمي ─── -->
+  <section class="md-preview" data-anim="frame">
+    <div class="md-preview__box" data-parallax-scope>
+      <div class="md-poster md-poster--reel" data-parallax="-8" style="--c1:#1b1a2e;--c2:#4b3ff0;--c3:#ff7a4d;--c4:#0a0a0a"></div>
+      <div class="md-preview__glass">
+        <span class="md-preview__cap">شوريل ٢٠٢٦</span>
+        <span class="md-preview__time">٠١:٤٨</span>
+      </div>
+      <button class="md-play" type="button" data-magnetic data-cursor="hidden" aria-label="تشغيل الشوريل">
+        <span class="md-play__ring"></span>
+        <span class="md-play__txt">تشغيل</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ─── 03 · نظرة عامة ─── -->
+  <section class="md-overview">
+    <div class="md-wrap">
+      <span class="md-eyebrow" data-anim="fade">ما الذي نقدّمه</span>
+      <p class="md-overview__text" data-anim="lines">
+        منذ ٢٠١٤ ونحن نعمل مع الشركات الناشئة والعلامات المؤسسية على تحويل الأفكار الطموحة إلى منتجات رقمية واضحة وقابلة للنمو — تصميم يُرى، وتجربة تُشعر، ونتائج تُقاس.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── 04 · الخدمات (لصق أثناء التمرير) ─── -->
+  <section class="md-feature" data-feature>
+    <div class="md-wrap md-feature__grid">
+
+      <div class="md-feature__stage">
+        <div class="md-feature__stack">
+          <div class="md-poster md-feature__art is-active" data-feature-art="0" style="--c1:#efeaff;--c2:#6b5cff;--c3:#c9bfff;--c4:#1a1440"></div>
+          <div class="md-poster md-feature__art" data-feature-art="1" style="--c1:#e6f6ee;--c2:#22a76a;--c3:#bfe9d4;--c4:#0e3324"></div>
+          <div class="md-poster md-feature__art" data-feature-art="2" style="--c1:#fff0e6;--c2:#ff7a3d;--c3:#ffd2b8;--c4:#40200e"></div>
+          <div class="md-poster md-feature__art" data-feature-art="3" style="--c1:#e8f1ff;--c2:#2f6bff;--c3:#c2d9ff;--c4:#0d1f45"></div>
+          <div class="md-poster md-feature__art" data-feature-art="4" style="--c1:#fdeaf2;--c2:#e0407f;--c3:#f9c8dc;--c4:#3d0f24"></div>
+        </div>
+      </div>
+
+      <ol class="md-feature__list">
+        <li class="md-feature__item" data-feature-item="0">
+          <span class="md-feature__no">٠١</span>
+          <h2 class="md-feature__title" data-anim="lines">تصميم المنتجات الرقمية</h2>
+          <p class="md-feature__text" data-anim="fade">من الفكرة الأولى إلى نظام قابل للتوسّع. نجمع استراتيجية المنتج وتجربة الاستخدام وتصميم الواجهات لتحويل التعقيد إلى بساطة يفهمها المستخدم من أول نظرة.</p>
+          <div class="md-feature__tags" data-anim="fade"><span>استراتيجية</span><span>UX</span><span>واجهات</span><span>نماذج أولية</span></div>
+        </li>
+        <li class="md-feature__item" data-feature-item="1">
+          <span class="md-feature__no">٠٢</span>
+          <h2 class="md-feature__title" data-anim="lines">تصميم وتطوير المواقع</h2>
+          <p class="md-feature__text" data-anim="fade">مواقع تشرح ما تفعله بوضوح، وتبني ثقة، وتدفع النمو. نعتني بالبنية والمحتوى والاستجابة والأداء بنفس القدر الذي نعتني به بالجماليات.</p>
+          <div class="md-feature__tags" data-anim="fade"><span>بنية المحتوى</span><span>تصميم</span><span>تطوير</span><span>أداء</span></div>
+        </li>
+        <li class="md-feature__item" data-feature-item="2">
+          <span class="md-feature__no">٠٣</span>
+          <h2 class="md-feature__title" data-anim="lines">بحث تجربة المستخدم</h2>
+          <p class="md-feature__text" data-anim="fade">نكتشف كيف يستخدم الناس منتجك فعلًا، وأين تتعثّر رحلتهم. مقابلات، اختبارات قابلية استخدام، ومسارات مستخدم تُصلح المشكلة قبل أن تصل إلى الواجهة.</p>
+          <div class="md-feature__tags" data-anim="fade"><span>مقابلات</span><span>اختبارات</span><span>مسارات</span><span>تحليل</span></div>
+        </li>
+        <li class="md-feature__item" data-feature-item="3">
+          <span class="md-feature__no">٠٤</span>
+          <h2 class="md-feature__title" data-anim="lines">الهوية البصرية</h2>
+          <p class="md-feature__text" data-anim="fade">هويات تمنح العلامة صوتًا بصريًا متماسكًا. من الطباعة العربية واللون إلى الدليل الرقمي وأصول الحملات — كل عنصر مصمّم ليعمل كجزء من نظام واحد.</p>
+          <div class="md-feature__tags" data-anim="fade"><span>شعار</span><span>طباعة</span><span>نظام لوني</span><span>دليل</span></div>
+        </li>
+        <li class="md-feature__item" data-feature-item="4">
+          <span class="md-feature__no">٠٥</span>
+          <h2 class="md-feature__title" data-anim="lines">التطوير الإبداعي</h2>
+          <p class="md-feature__text" data-anim="fade">نُخرج الأفكار الجريئة إلى الحياة عبر الحركة والتفاعل والعمق. تجارب لا تصنعها القوالب الجاهزة، مبنية بعناية على أداء ثابت في كل جهاز.</p>
+          <div class="md-feature__tags" data-anim="fade"><span>موشن</span><span>تفاعل</span><span>WebGL</span><span>ثلاثي الأبعاد</span></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ─── 05 · شريط الشركاء ─── -->
+  <section class="md-reel">
+    <div class="md-wrap">
+      <p class="md-reel__title" data-anim="lines">علامات نفخر بأننا جزء من مسيرتها</p>
+    </div>
+    <div class="md-marquee" data-marquee data-marquee-speed="0.55">
+      <div class="md-marquee__track">
+        <span class="md-marquee__item">أُفـق</span><span class="md-marquee__sep">◦</span>
+        <span class="md-marquee__item">نَبـض</span><span class="md-marquee__sep">◦</span>
+        <span class="md-marquee__item">تِبـر</span><span class="md-marquee__sep">◦</span>
+        <span class="md-marquee__item">مِسـار</span><span class="md-marquee__sep">◦</span>
+        <span class="md-marquee__item">وَمـيض</span><span class="md-marquee__sep">◦</span>
+        <span class="md-marquee__item">زُهـرة</span><span class="md-marquee__sep">◦</span>
+        <span class="md-marquee__item">قِمـم</span><span class="md-marquee__sep">◦</span>
+        <span class="md-marquee__item">رِفـد</span><span class="md-marquee__sep">◦</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 06 · أعمال مختارة ─── -->
+  <section class="md-works md-inverse" data-inverse>
+    <div class="md-wrap">
+      <div class="md-sechead">
+        <h2 class="md-sechead__title" data-anim="lines">أعمال مختارة</h2>
+        <a href="work.html" class="md-btn md-btn--ghost" data-magnetic data-cursor="hidden"><span>كل المشاريع</span></a>
+      </div>
+
+      <div class="md-worklist" data-worklist>
+        <a class="md-work" href="project.html" data-cursor="media" data-cursor-media="--c1:#1b1a2e;--c2:#6b5cff;--c3:#b9aeff;--c4:#0a0a0a">
+          <span class="md-work__no">٠١</span>
+          <span class="md-work__name">أُفـق</span>
+          <span class="md-work__desc">منصة استكشاف عقاري بتجربة ثلاثية الأبعاد</span>
+          <span class="md-work__meta">تصميم · تطوير · ٢٠٢٦</span>
+          <span class="md-work__line"></span>
+        </a>
+        <a class="md-work" href="project.html" data-cursor="media" data-cursor-media="--c1:#0d2b1f;--c2:#2fd08a;--c3:#9de7c4;--c4:#04140d">
+          <span class="md-work__no">٠٢</span>
+          <span class="md-work__name">نَبـض</span>
+          <span class="md-work__desc">تطبيق رعاية صحية يبسّط المتابعة اليومية</span>
+          <span class="md-work__meta">منتج · هوية · ٢٠٢٥</span>
+          <span class="md-work__line"></span>
+        </a>
+        <a class="md-work" href="project.html" data-cursor="media" data-cursor-media="--c1:#2a1c08;--c2:#e0a032;--c3:#f5d79a;--c4:#160e02">
+          <span class="md-work__no">٠٣</span>
+          <span class="md-work__name">تِبـر</span>
+          <span class="md-work__desc">متجر مجوهرات فاخر بتجربة شراء هادئة</span>
+          <span class="md-work__meta">تجارة · تطوير · ٢٠٢٥</span>
+          <span class="md-work__line"></span>
+        </a>
+        <a class="md-work" href="project.html" data-cursor="media" data-cursor-media="--c1:#0b1c3a;--c2:#4d8dff;--c3:#a9c9ff;--c4:#050d1c">
+          <span class="md-work__no">٠٤</span>
+          <span class="md-work__name">مِسـار</span>
+          <span class="md-work__desc">نظام تصميم موحّد لمنصة لوجستية</span>
+          <span class="md-work__meta">نظام تصميم · ٢٠٢٥</span>
+          <span class="md-work__line"></span>
+        </a>
+        <a class="md-work" href="project.html" data-cursor="media" data-cursor-media="--c1:#2e0d1c;--c2:#ff4f87;--c3:#ffb3c9;--c4:#17060e">
+          <span class="md-work__no">٠٥</span>
+          <span class="md-work__name">وَمـيض</span>
+          <span class="md-work__desc">هوية بصرية متحركة لمهرجان سينمائي</span>
+          <span class="md-work__meta">هوية · موشن · ٢٠٢٤</span>
+          <span class="md-work__line"></span>
+        </a>
+        <a class="md-work" href="project.html" data-cursor="media" data-cursor-media="--c1:#132a12;--c2:#8ed03c;--c3:#cfeaa4;--c4:#081408">
+          <span class="md-work__no">٠٦</span>
+          <span class="md-work__name">زُهـرة</span>
+          <span class="md-work__desc">منصة اشتراكات غذائية بواجهة شهيّة</span>
+          <span class="md-work__meta">منتج · موقع · ٢٠٢٤</span>
+          <span class="md-work__line"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 07 · آراء العملاء ─── -->
+  <section class="md-quotes">
+    <div class="md-wrap">
+      <div class="md-sechead">
+        <h2 class="md-sechead__title" data-anim="lines">ما يقوله شركاؤنا</h2>
+      </div>
+    </div>
+    <div class="md-drag" data-drag>
+      <div class="md-drag__track" data-drag-track>
+        <blockquote class="md-quote">
+          <p>عمل فريق مدار تجاوز ما توقّعناه. أعادوا بناء موقعنا بالكامل، والنتيجة انعكست مباشرة على معدّل التحويل خلال الشهر الأول.</p>
+          <footer><span class="md-quote__ava" style="--c1:#efeaff;--c2:#6b5cff"></span><cite>ليان الحربي<em>مديرة التسويق، أُفـق</em></cite></footer>
+        </blockquote>
+        <blockquote class="md-quote">
+          <p>ما ميّزهم حقًا هو الأسئلة التي طرحوها قبل أن يرسموا أول شاشة. فهموا منتجنا أعمق مما توقعنا من شريك خارجي.</p>
+          <footer><span class="md-quote__ava" style="--c1:#e6f6ee;--c2:#22a76a"></span><cite>ياسر العتيبي<em>مؤسس، نَبـض</em></cite></footer>
+        </blockquote>
+        <blockquote class="md-quote">
+          <p>تعاملوا مع الهوية كنظام حي لا كملف شعار. بعد سنتين ما زلنا نستخدم نفس الدليل دون أن يفقد تماسكه.</p>
+          <footer><span class="md-quote__ava" style="--c1:#fff0e6;--c2:#ff7a3d"></span><cite>دانة القحطاني<em>مديرة العلامة، تِبـر</em></cite></footer>
+        </blockquote>
+        <blockquote class="md-quote">
+          <p>سرعة الاستجابة والوضوح في كل مرحلة جعلا المشروع أسهل مما تخيّلنا. لم نحتج يومًا أن نسأل «أين وصلنا؟».</p>
+          <footer><span class="md-quote__ava" style="--c1:#e8f1ff;--c2:#2f6bff"></span><cite>عمر الشمري<em>مدير المنتج، مِسـار</em></cite></footer>
+        </blockquote>
+        <blockquote class="md-quote">
+          <p>مزيج نادر من الحس الجمالي والانضباط الهندسي. سلّمونا موقعًا سريعًا وجميلًا في آن واحد.</p>
+          <footer><span class="md-quote__ava" style="--c1:#fdeaf2;--c2:#e0407f"></span><cite>سارة المطيري<em>المديرة التنفيذية، وَمـيض</em></cite></footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 08 · لماذا مدار ─── -->
+  <section class="md-why">
+    <div class="md-wrap">
+      <span class="md-eyebrow" data-anim="fade">لماذا مدار</span>
+      <p class="md-why__text" data-anim="lines">
+        أكثر من عشر سنوات ونحن نساعد المؤسسين والفرق على تحويل الطموح إلى منتجات ناجحة. نالت أعمالنا تقديرًا دوليًا، لكن ما يهمنا أكثر هو شراكات تدوم وقيمة نستطيع قياسها.
+      </p>
+
+      <div class="md-stats">
+        <div class="md-stat" data-anim="fade">
+          <span class="md-stat__num" data-count="12" data-count-suffix="+">٠</span>
+          <span class="md-stat__cap">سنة من الخبرة المتراكمة</span>
+        </div>
+        <div class="md-stat" data-anim="fade" data-anim-delay="0.08">
+          <span class="md-stat__num" data-count="240" data-count-suffix="+">٠</span>
+          <span class="md-stat__cap">مشروع سُلّم حول العالم</span>
+        </div>
+        <div class="md-stat" data-anim="fade" data-anim-delay="0.16">
+          <span class="md-stat__num" data-count="19" data-count-suffix="">٠</span>
+          <span class="md-stat__cap">جائزة وتكريم دولي</span>
+        </div>
+      </div>
+
+      <div class="md-pills">
+        <div class="md-pill" data-anim="fade" style="--c1:#efeaff"><span class="md-pill__ico">◍</span><p>فريق واحد للاستراتيجية والتصميم والتطوير</p></div>
+        <div class="md-pill" data-anim="fade" data-anim-delay="0.06" style="--c1:#e6f6ee"><span class="md-pill__ico">◈</span><p>شراكات طويلة الأمد لا مشاريع عابرة</p></div>
+        <div class="md-pill" data-anim="fade" data-anim-delay="0.12" style="--c1:#fff0e6"><span class="md-pill__ico">◎</span><p>تسليم منضبط بمواعيد واضحة ومعلنة</p></div>
+        <div class="md-pill" data-anim="fade" data-anim-delay="0.18" style="--c1:#e8f1ff"><span class="md-pill__ico">◐</span><p>عناية استثنائية بالطباعة العربية والاتجاه</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 09 · المدونة ─── -->
+  <section class="md-insights md-inverse" data-inverse>
+    <div class="md-wrap">
+      <div class="md-sechead">
+        <h2 class="md-sechead__title" data-anim="lines">من دفاترنا</h2>
+        <a href="blog.html" class="md-btn md-btn--ghost" data-magnetic data-cursor="hidden"><span>زيارة المدونة</span></a>
+      </div>
+      <div class="md-cards">
+        <a href="blog.html" class="md-card" data-anim="frame" data-cursor="text" data-cursor-label="اقرأ">
+          <span class="md-card__art md-poster" data-parallax="-5" style="--c1:#1b1a2e;--c2:#6b5cff;--c3:#b9aeff;--c4:#0a0a0a"></span>
+          <span class="md-card__cat">أنظمة تصميم</span>
+          <h3 class="md-card__title">كيف تبني نظام تصميم يصمد لسنوات لا لأسابيع</h3>
+          <span class="md-card__date">١٤ يوليو ٢٠٢٦</span>
+        </a>
+        <a href="blog.html" class="md-card" data-anim="frame" data-anim-delay="0.1" data-cursor="text" data-cursor-label="اقرأ">
+          <span class="md-card__art md-poster" data-parallax="-5" style="--c1:#0d2b1f;--c2:#2fd08a;--c3:#9de7c4;--c4:#04140d"></span>
+          <span class="md-card__cat">موشن</span>
+          <h3 class="md-card__title">الحركة كأداة سرد: متى تضيف الأنيميشن قيمة فعلية؟</h3>
+          <span class="md-card__date">٢ يونيو ٢٠٢٦</span>
+        </a>
+        <a href="blog.html" class="md-card" data-anim="frame" data-anim-delay="0.2" data-cursor="text" data-cursor-label="اقرأ">
+          <span class="md-card__art md-poster" data-parallax="-5" style="--c1:#2a1c08;--c2:#e0a032;--c3:#f5d79a;--c4:#160e02"></span>
+          <span class="md-card__cat">طباعة</span>
+          <h3 class="md-card__title">الطباعة العربية على الويب: دليل عملي للفرق</h3>
+          <span class="md-card__date">٢١ أبريل ٢٠٢٦</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 10 · الأسئلة الشائعة ─── -->
+  <section class="md-faq md-inverse" data-inverse>
+    <div class="md-wrap md-faq__grid">
+      <h2 class="md-faq__head" data-anim="lines">أسئلة<br>متكررة</h2>
+      <div class="md-acc" data-acc>
+        <div class="md-acc__item" data-anim="fade">
+          <button class="md-acc__q" type="button" aria-expanded="false" data-cursor="pointer">
+            <span>كيف تبدو رحلة المشروع معكم؟</span><i class="md-acc__ico"></i>
+          </button>
+          <div class="md-acc__a"><div class="md-acc__in"><p>تبدأ كل رحلة بفهم عملك ومستخدميك وأهدافك. نحلّل الوضع الحالي، نحدد نقاط الاحتكاك، ثم نبني خطة واضحة: اكتشاف، بحث، بنية معلومات، مخططات، تصميم واجهات، نموذج تفاعلي، تطوير، اختبار، وإطلاق. في كل مرحلة تبقى الرؤية كاملة أمامك مع مراجعات دورية وتواصل مباشر مع الفريق.</p></div></div>
+        </div>
+        <div class="md-acc__item" data-anim="fade">
+          <button class="md-acc__q" type="button" aria-expanded="false" data-cursor="pointer">
+            <span>ما نطاق الخدمات التي تغطونها؟</span><i class="md-acc__ico"></i>
+          </button>
+          <div class="md-acc__a"><div class="md-acc__in"><p>نعمل من الاستراتيجية حتى الإطلاق ضمن فريق واحد: هوية بصرية، بحث مستخدم، تصميم تجربة وواجهة، تصميم حركي، تطوير واجهات وخلفيات، ربط أنظمة إدارة المحتوى، تحسين الأداء، ثم دعم مستمر بعد الإطلاق. بعض العملاء يأتون لصفحة واحدة، وبعضهم يعهد إلينا ببناء منتج كامل.</p></div></div>
+        </div>
+        <div class="md-acc__item" data-anim="fade">
+          <button class="md-acc__q" type="button" aria-expanded="false" data-cursor="pointer">
+            <span>كم يستغرق مشروع نموذجي؟</span><i class="md-acc__ico"></i>
+          </button>
+          <div class="md-acc__a"><div class="md-acc__in"><p>موقع تعريفي متوسط الحجم يستغرق عادة من ست إلى عشرة أسابيع. المنتجات الرقمية وأنظمة التصميم تتراوح بين ثلاثة وستة أشهر حسب حجم النطاق. نضع جدولًا زمنيًا مفصّلًا بعد جلسة الاكتشاف، ونلتزم به بمراحل تسليم معلنة مسبقًا.</p></div></div>
+        </div>
+        <div class="md-acc__item" data-anim="fade">
+          <button class="md-acc__q" type="button" aria-expanded="false" data-cursor="pointer">
+            <span>هل تبنون بقوالب جاهزة أم بكود مخصص؟</span><i class="md-acc__ico"></i>
+          </button>
+          <div class="md-acc__a"><div class="md-acc__in"><p>نختار التقنية بناءً على هدف العمل لا العكس. للمواقع التعريفية التي تحتاج إدارة محتوى سهلة وسرعة إطلاق قد نستخدم منصة جاهزة، أما التجارب المعقّدة والتفاعلات المتقدمة والمنصات القابلة للتوسّع فنبنيها بكود مخصص بالكامل.</p></div></div>
+        </div>
+        <div class="md-acc__item" data-anim="fade">
+          <button class="md-acc__q" type="button" aria-expanded="false" data-cursor="pointer">
+            <span>كيف تُحتسب التكلفة؟</span><i class="md-acc__ico"></i>
+          </button>
+          <div class="md-acc__a"><div class="md-acc__in"><p>نقدّم عرضًا ثابتًا للمشاريع محددة النطاق، ونموذج فريق مخصص شهريًا للمشاريع طويلة الأمد المتغيرة. في الحالتين تحصل على تفصيل واضح للمراحل والمخرجات قبل التوقيع، دون بنود مخفية.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 11 · الخاتمة ─── -->
+  <section class="md-outro">
+    <div class="md-wrap">
+      <span class="md-eyebrow" data-anim="fade">لديك فكرة؟</span>
+      <a href="contact.html" class="md-outro__link" data-cursor="text" data-cursor-label="هيا">
+        <span class="md-outro__word" data-anim="lines">أخبرنا عنها</span>
+        <span class="md-outro__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ التذييل ══ -->
+<footer class="md-foot">
+  <div class="md-wrap">
+    <a href="mailto:hello@madar.studio" class="md-foot__mail" data-cursor="text" data-cursor-label="راسلنا">hello@madar.studio</a>
+    <div class="md-foot__grid">
+      <div class="md-foot__col">
+        <span class="md-foot__cap">المقر</span>
+        <p>طريق الملك فهد، برج المدار<br>الرياض ١٢٢١١<br>المملكة العربية السعودية</p>
+      </div>
+      <div class="md-foot__col">
+        <span class="md-foot__cap">استوديو</span>
+        <p>شارع الشيخ زايد، الطابق ١٤<br>دبي<br>الإمارات العربية المتحدة</p>
+      </div>
+      <div class="md-foot__col">
+        <span class="md-foot__cap">روابط</span>
+        <nav>
+          <a href="services.html" data-cursor="pointer">الخدمات</a>
+          <a href="work.html" data-cursor="pointer">الأعمال</a>
+          <a href="about.html" data-cursor="pointer">عن مدار</a>
+          <a href="blog.html" data-cursor="pointer">المدونة</a>
+          <a href="contact.html" data-cursor="pointer">تواصل</a>
+        </nav>
+      </div>
+      <div class="md-foot__col">
+        <span class="md-foot__cap">تابعنا</span>
+        <nav>
+          <a href="#" data-cursor="pointer">Behance</a>
+          <a href="#" data-cursor="pointer">Dribbble</a>
+          <a href="#" data-cursor="pointer">Instagram</a>
+          <a href="#" data-cursor="pointer">LinkedIn</a>
+        </nav>
+      </div>
+    </div>
+    <div class="md-foot__bar">
+      <span>© ٢٠٢٦ مدار — استوديو رقمي إبداعي</span>
+      <span>صُنع بعناية في الرياض</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</div>
+
+<div class="md-progress" aria-hidden="true"><i data-progress></i></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

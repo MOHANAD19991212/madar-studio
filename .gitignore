@@ -1,0 +1,16 @@
+# نظام التشغيل
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# المحررات
+.vscode/
+.idea/
+*.swp
+*~
+
+# ملفات مؤقتة
+*.log
+*.tmp
