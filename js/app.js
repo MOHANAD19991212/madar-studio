@@ -1119,11 +1119,32 @@
       el.innerHTML = DATA.map(tileHTML).join('');
     }
 
+    /* بطاقة مروَّحة — تبدأ متكدّسة في المنتصف ثم تنفتح كأوراق اللعب.
+       ‎--dx‎ إزاحة البداية نحو المركز · ‎--rot/--dy‎ وضعها النهائي */
+    var ROT = [-6, 4, -3, 5, -5, 3, -4, 6];
+    var DY  = [1.2, 4, 0, 5, 1.6, 3.2, 0.8, 4.4];
+
+    function deckCardHTML(p, i, total) {
+      var mid = (total - 1) / 2;
+      /* في RTL العنصر الأول يقع أقصى اليمين، فيتحرّك يسارًا (سالبًا) نحو المركز */
+      var dx  = ((i - mid) * 4).toFixed(1);
+      return '' +
+        '<a class="md-deck__card" href="project.html?id=' + p.id + '" data-cursor="pointer" ' +
+          'style="--bg:' + p.bg + ';--fg:' + p.fg + ';--rot:' + ROT[i % ROT.length] + 'deg;' +
+          '--dy:' + DY[i % DY.length] + 'rem;--dx:' + dx + 'rem;--d:' + (i * 0.075).toFixed(3) + 's;z-index:' + (i + 1) + '">' +
+          '<span class="md-deck__title">' + p.name + '</span>' +
+          '<span class="md-deck__art">' +
+            '<img src="assets/work/' + p.id + '.jpg" alt="' + p.alt + '" loading="lazy">' +
+          '</span>' +
+        '</a>';
+    }
+
     function renderHome() {
       var el = $('[data-projects-home]');
       if (!el) return;
-      el.innerHTML = DATA.slice(0, 6).map(function (p, i) {
-        return workItemHTML(p, ('0' + (i + 1)).slice(-2));
+      var list = DATA.slice(0, 6);
+      el.innerHTML = list.map(function (p, i) {
+        return deckCardHTML(p, i, list.length);
       }).join('');
     }
 

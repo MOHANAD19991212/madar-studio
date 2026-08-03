@@ -15,6 +15,7 @@
 window.NOON_PROJECTS = [
   {
     id: "01",
+    bg: "#24baa9", fg: "#052a25",
     name: "نيرفانا ريزيدنس",
     year: "٢٠٢٦",
     type: "لافتات إرشادية (Wayfinding)",
@@ -30,6 +31,7 @@ window.NOON_PROJECTS = [
   },
   {
     id: "02",
+    bg: "#231f20", fg: "#ffffff",
     name: "بلفارد فلاورز",
     year: "٢٠٢٥",
     type: "واجهات ومناظر طبيعية مضيئة",
@@ -45,6 +47,7 @@ window.NOON_PROJECTS = [
   },
   {
     id: "03",
+    bg: "#4dbd99", fg: "#052a25",
     name: "مظلة مدخل",
     year: "٢٠٢٥",
     type: "هيكل معماري مضيء",
@@ -60,6 +63,7 @@ window.NOON_PROJECTS = [
   },
   {
     id: "04",
+    bg: "#0a2b28", fg: "#ffffff",
     name: "كأس العالم للرياضات الإلكترونية",
     year: "٢٠٢٥",
     type: "هوية موقع فعالية",
@@ -75,6 +79,7 @@ window.NOON_PROJECTS = [
   },
   {
     id: "05",
+    bg: "#e6f7f4", fg: "#0a2b28",
     name: "لافتة STAR",
     year: "٢٠٢٤",
     type: "أحرف بارزة مضيئة",
@@ -90,6 +95,7 @@ window.NOON_PROJECTS = [
   },
   {
     id: "06",
+    bg: "#404041", fg: "#ffffff",
     name: "واجهة تجارية متعددة",
     year: "٢٠٢٤",
     type: "حزمة لافتات محلات",
@@ -105,6 +111,7 @@ window.NOON_PROJECTS = [
   },
   {
     id: "07",
+    bg: "#2fd6c1", fg: "#052a25",
     name: "لوحة إعلانية عقارية",
     year: "٢٠٢٤",
     type: "لوحة إعلانية طرقية",
@@ -120,6 +127,7 @@ window.NOON_PROJECTS = [
   },
   {
     id: "08",
+    bg: "#12211f", fg: "#ffffff",
     name: "متجر أثاث",
     year: "٢٠٢٣",
     type: "لافتة أحرف مضيئة",

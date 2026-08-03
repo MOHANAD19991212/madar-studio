@@ -1266,6 +1266,98 @@ section:not(.md-inverse) + .md-inverse{border-radius:var(--r) var(--r) 0 0}
 .md-pill__title{font-weight:600;color:var(--ink);margin-block-end:.3rem;font-size:.98rem}
 .md-pill p{font-size:.98rem;line-height:1.55;max-width:20ch}
 
+/* ثلاث مراحل متساوية — auto-fill يُبقي المسارات الفارغة، لذا نحدّ العدد بثلاثة */
+.md-pills--3{grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));max-width:100%}
+@media (min-width:60rem){
+  .md-pills--3{grid-template-columns:repeat(3,1fr)}
+}
+.md-pills--3 .md-pill__title{
+  font-size:clamp(1.15rem,1.9vw,1.45rem);
+  line-height:1.25;
+  margin-block-end:.55rem;
+}
+
+/* ─────────────────────────────────────────────
+   9.5 · مجموعة الأعمال المروَّحة
+   بطاقات متداخلة مائلة، تبدأ متكدّسة في المنتصف
+   ثم تنفتح كأوراق اللعب عند دخول القسم الشاشة.
+   ───────────────────────────────────────────── */
+.md-deck{padding-block-end:var(--sec)}
+.md-deck__row{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding-block:clamp(2.5rem,6vw,5rem) clamp(3.5rem,7vw,6rem);
+}
+.md-deck__card{
+  --overlap:clamp(1.1rem,2.6vw,2.6rem);
+  position:relative;
+  flex:0 0 auto;
+  width:clamp(9rem,15vw,14rem);
+  aspect-ratio:5/7;
+  margin-inline:calc(var(--overlap) * -1);
+  padding:clamp(.85rem,1.3vw,1.2rem);
+  display:flex;
+  flex-direction:column;
+  gap:.8rem;
+  background:var(--bg,var(--ink));
+  color:var(--fg,var(--bg));
+  border-radius:clamp(.85rem,1.3vw,1.25rem);
+  box-shadow:0 1rem 2.2rem rgba(0,0,0,.13);
+  /* الحالة الأولى: متكدّسة في المنتصف وغير ظاهرة */
+  opacity:0;
+  transform:translate3d(var(--dx,0),3.5rem,0) rotate(0deg) scale(.9);
+  transition:opacity .75s var(--e) var(--d,0s),
+             transform 1.15s var(--e) var(--d,0s),
+             box-shadow .45s var(--e);
+}
+[data-anim="deck"].is-in .md-deck__card{
+  opacity:1;
+  transform:translate3d(0,var(--dy,0),0) rotate(var(--rot,0deg)) scale(1);
+}
+[data-anim="deck"].is-in .md-deck__card:hover{
+  z-index:30 !important;
+  transform:translate3d(0,calc(var(--dy,0rem) - 1rem),0) rotate(var(--rot,0deg)) scale(1.05);
+  box-shadow:0 1.8rem 3.4rem rgba(0,0,0,.24);
+  transition-delay:0s;
+}
+.md-deck__title{
+  font-size:clamp(.95rem,1.45vw,1.3rem);
+  font-weight:600;
+  line-height:1.22;
+  letter-spacing:-.01em;
+}
+.md-deck__art{
+  display:block;
+  margin-block-start:auto;
+  aspect-ratio:1/1;
+  border-radius:calc(clamp(.85rem,1.3vw,1.25rem) - .45rem);
+  overflow:hidden;
+}
+.md-deck__art img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* الجوال: شبكة عمودين بلا ميلان ولا تداخل — المروحة لا تُقرأ في مساحة ضيّقة */
+@media (max-width:820px){
+  .md-deck__row{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:.8rem;
+    padding-block:2rem 2.5rem;
+  }
+  .md-deck__card{
+    width:auto;
+    margin-inline:0;
+    transform:translate3d(0,2rem,0);
+  }
+  [data-anim="deck"].is-in .md-deck__card{transform:none}
+  [data-anim="deck"].is-in .md-deck__card:hover{transform:none;box-shadow:0 1rem 2.2rem rgba(0,0,0,.13)}
+}
+
 /* ─────────────────────────────────────────────
    10 · المدونة والأسئلة
    ───────────────────────────────────────────── */
@@ -1749,5 +1841,7 @@ section:not(.md-inverse) + .md-inverse{border-radius:var(--r) var(--r) 0 0}
   .md-line__i,[data-anim="fade"]{transform:none!important;opacity:1!important}
   [data-anim="frame"]{clip-path:none!important}
   [data-anim="frame"] .md-poster{transform:none!important}
+  /* البطاقات تظهر بوضعها النهائي مباشرة بلا انفتاح */
+  .md-deck__card{opacity:1!important;transform:translate3d(0,var(--dy,0),0) rotate(var(--rot,0deg))!important}
   .md-hero__hintline i{display:none}
 }

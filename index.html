@@ -50,7 +50,6 @@
       <a href="services.html" data-cursor="pointer"><span data-link-swap>الخدمات</span></a>
       <a href="work.html" data-cursor="pointer"><span data-link-swap>الأعمال</span></a>
       <a href="about.html" data-cursor="pointer"><span data-link-swap>عن نون</span></a>
-      <a href="blog.html" data-cursor="pointer"><span data-link-swap>المدونة</span></a>
     </nav>
 
     <a href="contact.html" class="md-btn md-btn--sm md-head__cta" data-magnetic data-cursor="hidden">
@@ -72,8 +71,7 @@
       <a href="services.html" data-cursor="pointer"><span class="md-menu__idx">02</span><span class="md-menu__txt" data-link-swap>الخدمات</span></a>
       <a href="work.html" data-cursor="pointer"><span class="md-menu__idx">03</span><span class="md-menu__txt" data-link-swap>الأعمال</span></a>
       <a href="about.html" data-cursor="pointer"><span class="md-menu__idx">04</span><span class="md-menu__txt" data-link-swap>عن نون</span></a>
-      <a href="blog.html" data-cursor="pointer"><span class="md-menu__idx">05</span><span class="md-menu__txt" data-link-swap>المدونة</span></a>
-      <a href="contact.html" data-cursor="pointer"><span class="md-menu__idx">06</span><span class="md-menu__txt" data-link-swap>تواصل معنا</span></a>
+      <a href="contact.html" data-cursor="pointer"><span class="md-menu__idx">05</span><span class="md-menu__txt" data-link-swap>تواصل معنا</span></a>
     </nav>
     <div class="md-menu__aside">
       <div class="md-menu__col">
@@ -246,15 +244,16 @@
   </section>
 
   <!-- ─── 06 · أعمال مختارة ─── -->
-  <section class="md-works md-inverse" data-inverse>
+  <section class="md-deck">
     <div class="md-wrap">
       <div class="md-sechead">
         <h2 class="md-sechead__title" data-anim="lines">أعمال مختارة</h2>
         <a href="work.html" class="md-btn md-btn--ghost" data-magnetic data-cursor="hidden"><span>كل المشاريع</span></a>
       </div>
 
-      <!-- تُملأ تلقائيًا من js/projects-data.js — لا تُعدَّل هنا -->
-      <div class="md-worklist" data-worklist data-projects-home></div>
+      <!-- البطاقات تُبنى من js/projects-data.js — لا تُعدَّل هنا.
+           data-anim="deck" يضيف is-in عند الظهور فتنفتح البطاقات كأوراق اللعب -->
+      <div class="md-deck__row" data-anim="deck" data-projects-home></div>
     </div>
   </section>
 
@@ -276,51 +275,30 @@
           <span class="md-stat__cap">مشروع سُلّم حول العالم</span>
         </div>
         <div class="md-stat" data-anim="fade" data-anim-delay="0.16">
-          <span class="md-stat__num" data-count="19" data-count-suffix="">٠</span>
-          <span class="md-stat__cap">جائزة وتكريم دولي</span>
+          <span class="md-stat__num" data-count="100" data-count-suffix="+">٠</span>
+          <span class="md-stat__cap">عميل وثق بنا</span>
         </div>
       </div>
 
-      <div class="md-pills">
-        <div class="md-pill" data-anim="fade" style="--c1:#e6f7f4"><span class="md-pill__ico">◍</span><p>فريق واحد للاستراتيجية والتصميم والتطوير</p></div>
-        <div class="md-pill" data-anim="fade" data-anim-delay="0.06" style="--c1:#eaf7f1"><span class="md-pill__ico">◈</span><p>شراكات طويلة الأمد لا مشاريع عابرة</p></div>
-        <div class="md-pill" data-anim="fade" data-anim-delay="0.12" style="--c1:#f0f0f0"><span class="md-pill__ico">◎</span><p>تسليم منضبط بمواعيد واضحة ومعلنة</p></div>
-        <div class="md-pill" data-anim="fade" data-anim-delay="0.18" style="--c1:#e9f6f6"><span class="md-pill__ico">◐</span><p>عناية استثنائية بالطباعة العربية والاتجاه</p></div>
+      <!-- كيف نعمل — المنهجية الثلاثية -->
+      <div class="md-pills md-pills--3">
+        <div class="md-pill" data-anim="fade" style="--c1:#e6f7f4">
+          <span class="md-pill__ico">◍</span>
+          <div><h3 class="md-pill__title">التحليل</h3><p>دراسة هوية العميل وموقعه وبيئته المحيطة قبل أي قرار تصميمي.</p></div>
+        </div>
+        <div class="md-pill" data-anim="fade" data-anim-delay="0.08" style="--c1:#eaf7f1">
+          <span class="md-pill__ico">◈</span>
+          <div><h3 class="md-pill__title">التصميم</h3><p>تصوّر ثلاثي الأبعاد يُظهر الشكل النهائي قبل أن يُصنَّع.</p></div>
+        </div>
+        <div class="md-pill" data-anim="fade" data-anim-delay="0.16" style="--c1:#f0f0f0">
+          <span class="md-pill__ico">◐</span>
+          <div><h3 class="md-pill__title">التنفيذ</h3><p>تصنيع وتركيب ميداني بتقنيات آمنة ومعايير جودة صارمة.</p></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ─── 09 · المدونة ─── -->
-  <section class="md-insights md-inverse" data-inverse>
-    <div class="md-wrap">
-      <div class="md-sechead">
-        <h2 class="md-sechead__title" data-anim="lines">من دفاترنا</h2>
-        <a href="blog.html" class="md-btn md-btn--ghost" data-magnetic data-cursor="hidden"><span>زيارة المدونة</span></a>
-      </div>
-      <div class="md-cards">
-        <a href="blog.html" class="md-card" data-anim="frame" data-cursor="text" data-cursor-label="اقرأ">
-          <span class="md-card__art md-poster" data-parallax="-5" style="--c1:#0a2b28;--c2:#24baa9;--c3:#4dbd99;--c4:#000000"></span>
-          <span class="md-card__cat">أنظمة تصميم</span>
-          <h3 class="md-card__title">كيف تبني نظام تصميم يصمد لسنوات لا لأسابيع</h3>
-          <span class="md-card__date">١٤ يوليو ٢٠٢٦</span>
-        </a>
-        <a href="blog.html" class="md-card" data-anim="frame" data-anim-delay="0.1" data-cursor="text" data-cursor-label="اقرأ">
-          <span class="md-card__art md-poster" data-parallax="-5" style="--c1:#0d2a22;--c2:#4dbd99;--c3:#8fd9bd;--c4:#000000"></span>
-          <span class="md-card__cat">موشن</span>
-          <h3 class="md-card__title">الحركة كأداة سرد: متى تضيف الأنيميشن قيمة فعلية؟</h3>
-          <span class="md-card__date">٢ يونيو ٢٠٢٦</span>
-        </a>
-        <a href="blog.html" class="md-card" data-anim="frame" data-anim-delay="0.2" data-cursor="text" data-cursor-label="اقرأ">
-          <span class="md-card__art md-poster" data-parallax="-5" style="--c1:#231f20;--c2:#404041;--c3:#7c7c7d;--c4:#000000"></span>
-          <span class="md-card__cat">طباعة</span>
-          <h3 class="md-card__title">الطباعة العربية على الويب: دليل عملي للفرق</h3>
-          <span class="md-card__date">٢١ أبريل ٢٠٢٦</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── 10 · الخاتمة ─── -->
+  <!-- ─── 09 · الخاتمة ─── -->
   <!-- بيانات التواصل حاضرة هنا مباشرة — لا انتقال إلى صفحة أخرى -->
   <section class="md-outro">
     <div class="md-wrap">
@@ -373,7 +351,6 @@
           <a href="services.html" data-cursor="pointer">الخدمات</a>
           <a href="work.html" data-cursor="pointer">الأعمال</a>
           <a href="about.html" data-cursor="pointer">عن نون</a>
-          <a href="blog.html" data-cursor="pointer">المدونة</a>
           <a href="contact.html" data-cursor="pointer">تواصل</a>
         </nav>
       </div>
