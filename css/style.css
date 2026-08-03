@@ -1669,6 +1669,13 @@ section:not(.md-inverse) + .md-inverse{border-radius:var(--r) var(--r) 0 0}
 .md-member__name{font-size:1.12rem;font-weight:500}
 .md-member__role{font-size:.9rem;color:var(--ink-40)}
 
+/* زرّا الإرسال جنبًا إلى جنب، ويتكدّسان على الجوال */
+.md-send{flex-direction:row;flex-wrap:wrap;gap:.85rem}
+@media (max-width:600px){
+  .md-send{flex-direction:column;align-items:stretch}
+  .md-send .md-btn{width:100%;justify-content:center}
+}
+
 /* نموذج التواصل */
 .md-form{
   display:grid;

@@ -923,8 +923,43 @@
     return { init: function () { $$('[data-video]').forEach(setup); } };
   })();
 
-  /* اختيار الشرائح في نموذج التواصل */
+  /* نموذج التواصل — الشرائح، ثم الإرسال عبر واتساب أو البريد.
+     الموقع ملفات ثابتة بلا خادم، فلا يمكن استقبال POST. بدل نموذج
+     يبتلع الرسالة بصمت، نجمع المدخلات في رسالة جاهزة ونفتح بها
+     واتساب أو تطبيق البريد — يصل فعلًا وبلا اعتماد خارجي. */
   var Chips = (function () {
+    var WA = '966570701018';
+    var MAIL = 'info@noon-adv.com';
+
+    function collect(form) {
+      var get = function (n) {
+        var el = form.querySelector('[name="' + n + '"]');
+        return el && el.value.trim() ? el.value.trim() : '';
+      };
+      var picked = function (label) {
+        var group = null;
+        $$('.md-field--full', form).forEach(function (f) {
+          var l = $('label', f);
+          if (l && l.textContent.indexOf(label) > -1) group = f;
+        });
+        if (!group) return '';
+        return $$('.md-chip.is-on', group).map(function (c) {
+          return c.textContent.trim();
+        }).join('، ');
+      };
+
+      var lines = [];
+      var add = function (k, v) { if (v) lines.push(k + ': ' + v); };
+      add('الاسم', get('name'));
+      add('الشركة', get('company'));
+      add('البريد', get('email'));
+      add('الجوال', get('phone'));
+      add('الخدمة', picked('تحتاجه'));
+      add('الميزانية', picked('الميزانية'));
+      add('التفاصيل', get('message'));
+      return lines.join('\n');
+    }
+
     return {
       init: function () {
         $$('.md-chip').forEach(function (c) {
@@ -934,13 +969,35 @@
             c.setAttribute('aria-pressed', on ? 'true' : 'false');
           });
         });
+
         var form = $('[data-form]');
         if (!form) return;
+
         form.addEventListener('submit', function (e) {
           e.preventDefault();
+          var body = collect(form);
+          if (!body) {
+            var b0 = $('[data-form-btn] span', form);
+            if (b0) b0.textContent = 'اكتب اسمك ورسالتك أولًا';
+            return;
+          }
+          var msg = 'طلب من موقع نون الاحترافية\n\n' + body;
+          window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
           var btn = $('[data-form-btn] span', form);
-          if (btn) btn.textContent = 'وصلتنا رسالتك · شكرًا لك';
+          if (btn) btn.textContent = 'فُتح واتساب · أرسل الرسالة';
         });
+
+        /* زرّ البريد يبني نفس الرسالة في mailto لحظة النقر */
+        var mail = $('[data-form-mail]', form);
+        if (mail) {
+          mail.addEventListener('click', function () {
+            var body = collect(form);
+            mail.setAttribute('href',
+              'mailto:' + MAIL +
+              '?subject=' + encodeURIComponent('طلب مشروع — نون الاحترافية') +
+              '&body=' + encodeURIComponent(body || ''));
+          });
+        }
       }
     };
   })();
