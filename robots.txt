@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# قالب دراسة الحالة يُقرأ محتواه من ?id= — لا قيمة لفهرسته بلا معرّف
+Disallow: /project.html$
+
+Sitemap: https://mohanad19991212.github.io/madar-studio/sitemap.xml

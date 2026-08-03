@@ -46,13 +46,16 @@
       if (this.running) return;
       this.running = true;
       this.last = performance.now();
-      requestAnimationFrame(this.loop.bind(this));
+      /* نربط الدالة مرة واحدة: bind داخل الحلقة كان يُنشئ دالة جديدة
+         كل إطار (٦٠ كائنًا في الثانية) فيُثقل جامع القمامة بلا داعٍ */
+      if (!this._bound) this._bound = this.loop.bind(this);
+      requestAnimationFrame(this._bound);
     },
     loop: function (now) {
       var dt = Math.min(now - this.last, 64);
       this.last = now;
       for (var i = 0; i < this.subs.length; i++) this.subs[i](dt, now);
-      requestAnimationFrame(this.loop.bind(this));
+      requestAnimationFrame(this._bound);
     }
   };
 
@@ -925,7 +928,11 @@
     return {
       init: function () {
         $$('.md-chip').forEach(function (c) {
-          c.addEventListener('click', function () { c.classList.toggle('is-on'); });
+          c.addEventListener('click', function () {
+            var on = c.classList.toggle('is-on');
+            /* الحالة تُنقل لقارئ الشاشة أيضًا، لا باللون وحده */
+            c.setAttribute('aria-pressed', on ? 'true' : 'false');
+          });
         });
         var form = $('[data-form]');
         if (!form) return;
@@ -1044,10 +1051,25 @@
 
         var num = $('[data-loader-num]', el);
         var bar = $('.md-loader__bar i', el);
-        var p = 0, real = 0, loaded = false;
+        var p = 0, real = 0, loaded = false, finished = false;
 
         window.addEventListener('load', function () { loaded = true; });
         setTimeout(function () { loaded = true; }, 3200);
+
+        /* الإنهاء يمرّ من هنا حصرًا، ومرة واحدة: هو ما يُفعّل التمرير
+           ويضيف is-ready. لو نُودي مرتين لأُعيد تهيئة التمرير بلا داعٍ. */
+        function finish() {
+          if (finished) return;
+          finished = true;
+          el.classList.add('is-done');
+          done();
+          setTimeout(function () { if (el.parentNode) el.remove(); }, 1100);
+        }
+
+        /* شبكة أمان: شريط التقدّم يعتمد على requestAnimationFrame، وهذا
+           يتوقّف في التبويبات الخلفية. بدونها يبقى الغطاء الكامل ظاهرًا
+           ويظلّ التمرير معطّلًا — أي موقع غير قابل للاستخدام إطلاقًا. */
+        var guard = setTimeout(finish, 6000);
 
         var t0 = performance.now();
         function step(now) {
@@ -1059,11 +1081,8 @@
           if (num) num.textContent = toArabic(shown);
           if (bar) bar.style.transform = 'scaleX(' + p.toFixed(3) + ')';
           if (p < 1) { requestAnimationFrame(step); return; }
-          setTimeout(function () {
-            el.classList.add('is-done');
-            done();
-            setTimeout(function () { el.remove(); }, 1100);
-          }, 180);
+          clearTimeout(guard);
+          setTimeout(finish, 180);
         }
         requestAnimationFrame(step);
       }
@@ -1082,32 +1101,59 @@
   var Projects = (function () {
     var DATA = window.NOON_PROJECTS || [];
 
-    function metaLine(p) {
-      return p.tags[0] + ' · ' + p.tags[1] + ' · ' + p.year;
+    /* تنقية المخرجات — البيانات نكتبها نحن، لكن الترميز يُبنى بـ innerHTML
+       فأي محرّر يضيف مشروعًا لاحقًا قد يُدخل نصًا فيه < أو " دون قصد.
+       الهروب هنا يمنع كسر البنية وأي حقن محتمل. */
+    var ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+    function esc(v) {
+      return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return ESC[c]; });
     }
 
+    /* الألوان تُحقن في سمة style — نقبل صيغة hex فقط ونرفض ما عداها،
+       فلا يمكن تمرير إعلان CSS إضافي عبر حقل اللون */
+    function hex(v, fallback) {
+      return /^#[0-9a-fA-F]{3,8}$/.test(String(v || '')) ? v : fallback;
+    }
+
+    /* المعرّف يدخل في الرابط ومسار الصورة — أرقام وحروف فقط */
+    function safeId(v) {
+      return /^[A-Za-z0-9_-]{1,32}$/.test(String(v || '')) ? v : '';
+    }
+
+    function metaLine(p) {
+      return esc(p.tags[0]) + ' · ' + esc(p.tags[1]) + ' · ' + esc(p.year);
+    }
+
+    /* أبعاد الصور المصدرية — تُكتب على كل <img> فيحجز المتصفح المساحة
+       قبل التحميل ولا يقفز التخطيط (Cumulative Layout Shift) */
+    var IMG_W = 1200, IMG_H = 1190;
+
     function tileHTML(p, i) {
+      var id = safeId(p.id);
       var delayAttr = (i % 2 === 1) ? ' data-anim-delay="0.08"' : '';
       var loading = (i === 0) ? 'eager' : 'lazy';
-      var tags = p.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
+      var tags = p.tags.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('');
       return '' +
         '<article class="md-tile" data-anim="frame"' + delayAttr + '>' +
-          '<a href="project.html?id=' + p.id + '" class="md-tile__art" data-cursor="text" data-cursor-label="المشروع">' +
-            '<img class="md-tile__img" src="assets/work/' + p.id + '.jpg" alt="' + p.alt + '" loading="' + loading + '" data-parallax="-6">' +
+          '<a href="project.html?id=' + id + '" class="md-tile__art" data-cursor="text" data-cursor-label="المشروع">' +
+            '<img class="md-tile__img" src="assets/work/' + id + '.jpg" alt="' + esc(p.alt) + '" ' +
+              'width="' + IMG_W + '" height="' + IMG_H + '" ' +
+              'loading="' + loading + '" decoding="async" data-parallax="-6">' +
           '</a>' +
-          '<div class="md-tile__row"><h2 class="md-tile__name">' + p.name + '</h2><span class="md-tile__year">' + p.year + '</span></div>' +
-          '<p class="md-tile__desc">' + p.lead + '</p>' +
+          '<div class="md-tile__row"><h2 class="md-tile__name">' + esc(p.name) + '</h2><span class="md-tile__year">' + esc(p.year) + '</span></div>' +
+          '<p class="md-tile__desc">' + esc(p.lead) + '</p>' +
           '<div class="md-tile__tags">' + tags + '</div>' +
         '</article>';
     }
 
     function workItemHTML(p, no) {
+      var id = safeId(p.id);
       return '' +
-        '<a class="md-work" href="project.html?id=' + p.id + '" data-cursor="media" ' +
-          'data-cursor-media="background-image:url(\'assets/work/' + p.id + '.jpg\');background-size:cover;background-position:center">' +
+        '<a class="md-work" href="project.html?id=' + id + '" data-cursor="media" ' +
+          'data-cursor-media="background-image:url(\'assets/work/' + id + '.jpg\');background-size:cover;background-position:center">' +
           '<span class="md-work__no">' + toArabic(no) + '</span>' +
-          '<span class="md-work__name">' + p.name + '</span>' +
-          '<span class="md-work__desc">' + p.lead + '</span>' +
+          '<span class="md-work__name">' + esc(p.name) + '</span>' +
+          '<span class="md-work__desc">' + esc(p.lead) + '</span>' +
           '<span class="md-work__meta">' + metaLine(p) + '</span>' +
           '<span class="md-work__line"></span>' +
         '</a>';
@@ -1125,16 +1171,20 @@
     var DY  = [1.2, 4, 0, 5, 1.6, 3.2, 0.8, 4.4];
 
     function deckCardHTML(p, i, total) {
+      var id  = safeId(p.id);
       var mid = (total - 1) / 2;
       /* في RTL العنصر الأول يقع أقصى اليمين، فيتحرّك يسارًا (سالبًا) نحو المركز */
       var dx  = ((i - mid) * 4).toFixed(1);
       return '' +
-        '<a class="md-deck__card" href="project.html?id=' + p.id + '" data-cursor="pointer" ' +
-          'style="--bg:' + p.bg + ';--fg:' + p.fg + ';--rot:' + ROT[i % ROT.length] + 'deg;' +
+        '<a class="md-deck__card" href="project.html?id=' + id + '" data-cursor="pointer" ' +
+          'style="--bg:' + hex(p.bg, '#231f20') + ';--fg:' + hex(p.fg, '#ffffff') + ';--rot:' + ROT[i % ROT.length] + 'deg;' +
           '--dy:' + DY[i % DY.length] + 'rem;--dx:' + dx + 'rem;--d:' + (i * 0.075).toFixed(3) + 's;z-index:' + (i + 1) + '">' +
-          '<span class="md-deck__title">' + p.name + '</span>' +
+          '<span class="md-deck__title">' + esc(p.name) + '</span>' +
           '<span class="md-deck__art">' +
-            '<img src="assets/work/' + p.id + '.jpg" alt="' + p.alt + '" loading="lazy">' +
+            /* alt فارغ عمدًا: اسم المشروع مكتوب فوق الصورة، فلا يُقرأ مرتين */
+            '<img src="assets/work/' + id + '.jpg" alt="" ' +
+              'width="' + IMG_W + '" height="' + IMG_H + '" ' +
+              'loading="lazy" decoding="async">' +
           '</span>' +
         '</a>';
     }
@@ -1172,9 +1222,42 @@
 
       var hero = $('[data-project-hero]', root);
       if (hero) {
-        hero.setAttribute('src', 'assets/work/' + project.id + '.jpg');
+        hero.setAttribute('width', IMG_W);
+        hero.setAttribute('height', IMG_H);
+        hero.setAttribute('decoding', 'async');
+        hero.setAttribute('fetchpriority', 'high');   /* صورة LCP لهذه الصفحة */
+        hero.setAttribute('src', 'assets/work/' + safeId(project.id) + '.jpg');
         hero.setAttribute('alt', project.alt);
       }
+
+      /* الرابط المرجعي يجب أن يشير إلى المشروع المعروض لا إلى القالب،
+         وإلا رأت محركات البحث ثماني صفحات بمرجع واحد */
+      var canon = $('link[rel="canonical"]');
+      if (canon) {
+        canon.setAttribute('href',
+          canon.getAttribute('href').split('?')[0] + '?id=' + safeId(project.id));
+      }
+      var ogUrl = $('meta[property="og:url"]');
+      if (ogUrl) {
+        ogUrl.setAttribute('content',
+          ogUrl.getAttribute('content').split('?')[0] + '?id=' + safeId(project.id));
+      }
+      /* صورة المشاركة تتبع المشروع أيضًا */
+      ['og:image', 'twitter:image'].forEach(function (prop) {
+        var m = $('meta[property="' + prop + '"]') || $('meta[name="' + prop + '"]');
+        if (m) {
+          var base = (m.getAttribute('content') || '').replace(/assets\/work\/[^/]+$/, '');
+          m.setAttribute('content', base + 'assets/work/' + safeId(project.id) + '.jpg');
+        }
+      });
+      ['og:title', 'twitter:title'].forEach(function (prop) {
+        var m = $('meta[property="' + prop + '"]') || $('meta[name="' + prop + '"]');
+        if (m) m.setAttribute('content', project.name + ' — نون الاحترافية');
+      });
+      ['og:description', 'twitter:description'].forEach(function (prop) {
+        var m = $('meta[property="' + prop + '"]') || $('meta[name="' + prop + '"]');
+        if (m) m.setAttribute('content', project.lead);
+      });
 
       ['type', 'sector', 'year', 'scope'].forEach(function (k) {
         var f = $('[data-project-fact="' + k + '"]', root);
@@ -1184,7 +1267,7 @@
       var body = $('[data-project-body]', root);
       if (body) {
         body.innerHTML = project.sections.map(function (s) {
-          return '<h2 data-anim="lines">' + s.h + '</h2><p data-anim="fade">' + s.p + '</p>';
+          return '<h2 data-anim="lines">' + esc(s.h) + '</h2><p data-anim="fade">' + esc(s.p) + '</p>';
         }).join('');
       }
 
@@ -1248,6 +1331,9 @@
       var a = e.target.closest('a[href^="#"]');
       if (!a) return;
       var id = a.getAttribute('href');
+      /* ‎href="#"‎ وحده يقفز بالصفحة إلى أعلاها — سلوك مكسور
+         لروابط التواصل التي تنتظر عناوينها الحقيقية */
+      if (id === '#') { e.preventDefault(); return; }
       if (id.length < 2) return;
       var t = document.querySelector(id);
       if (!t) return;
