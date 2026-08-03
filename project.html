@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>أُفـق — نون الاحترافية</title>
-<meta name="description" content="أُفـق: منصة استكشاف عقاري بتجربة ثلاثية الأبعاد — دراسة حالة من نون الاحترافية.">
+<title>مشروع — نون الاحترافية</title>
+<meta name="description" content="دراسة حالة من أعمال نون الاحترافية." data-project-meta>
 <meta name="theme-color" content="#ffffff">
 <link rel="preload" href="assets/fonts/itfGhroobArabic-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="assets/fonts/itfGhroobArabic-Medium.otf" as="font" type="font/otf" crossorigin>
@@ -79,51 +79,31 @@
 <div class="md-scroll" data-scroll-root>
 <div class="md-scroll__inner" data-scroll-inner>
 
-<main class="md-main">
+<!-- كل محتوى هذه الصفحة يُملأ من js/projects-data.js حسب ?id= في الرابط
+     (مثال: project.html?id=04) — لا يوجد محتوى ثابت هنا لتعديله. -->
+<main class="md-main" data-project-detail>
 
   <section class="md-phead">
     <div class="md-wrap">
-      <span class="md-phead__cap" data-anim="fade">دراسة حالة · ٢٠٢٦</span>
-      <h1 class="md-phead__title" data-anim="lines">أُفـق</h1>
-      <p class="md-phead__lead" data-anim="lines" data-anim-delay="0.18">
-        منصة استكشاف عقاري تتيح للمشتري أن يتجوّل داخل وحدته ويجرّب تشطيباتها قبل أن يُصبّ الأساس.
-      </p>
+      <span class="md-phead__cap" data-anim="fade" data-project-cap></span>
+      <h1 class="md-phead__title" data-anim="lines" data-project-title></h1>
+      <p class="md-phead__lead" data-anim="lines" data-anim-delay="0.18" data-project-lead></p>
     </div>
   </section>
 
   <div class="md-hero-art" data-anim="frame">
-    <div class="md-poster md-poster--reel" data-parallax="-8" style="--c1:#0a2b28;--c2:#24baa9;--c3:#4dbd99;--c4:#000000"></div>
+    <img class="md-hero-art__img" data-project-hero data-parallax="-8" alt="">
   </div>
 
   <div class="md-wrap">
     <div class="md-facts">
-      <div class="md-fact" data-anim="fade"><span>العميل</span><p>أُفـق للتطوير العقاري</p></div>
-      <div class="md-fact" data-anim="fade" data-anim-delay="0.06"><span>السنة</span><p>٢٠٢٥ — ٢٠٢٦</p></div>
-      <div class="md-fact" data-anim="fade" data-anim-delay="0.12"><span>المدة</span><p>٧ أشهر</p></div>
-      <div class="md-fact" data-anim="fade" data-anim-delay="0.18"><span>النطاق</span><p>بحث · منتج · ثلاثي الأبعاد · تطوير</p></div>
+      <div class="md-fact" data-anim="fade"><span>النوع</span><p data-project-fact="type"></p></div>
+      <div class="md-fact" data-anim="fade" data-anim-delay="0.06"><span>القطاع</span><p data-project-fact="sector"></p></div>
+      <div class="md-fact" data-anim="fade" data-anim-delay="0.12"><span>السنة</span><p data-project-fact="year"></p></div>
+      <div class="md-fact" data-anim="fade" data-anim-delay="0.18"><span>النطاق</span><p data-project-fact="scope"></p></div>
     </div>
 
-    <div class="md-rich">
-      <h2 data-anim="lines">التحدّي</h2>
-      <p data-anim="fade">كان بيع الوحدات على الخارطة يعتمد على مخططات ثنائية الأبعاد وصور ترويجية لا تعكس المساحة الحقيقية. النتيجة: جولات بيع طويلة، وأسئلة متكررة، ونسبة إلغاء مرتفعة بعد التسليم لأن التوقّع لم يطابق الواقع.</p>
-      <p data-anim="fade">طُلب منّا اختصار المسافة بين التخيّل والقرار — أن يرى المشتري وحدته كما ستكون، لا كما رُسمت.</p>
-
-      <figure data-anim="frame">
-        <div class="md-poster" style="--c1:#06322d;--c2:#2fd6c1;--c3:#4dbd99;--c4:#01110f"></div>
-      </figure>
-
-      <h2 data-anim="lines">ما فعلناه</h2>
-      <p data-anim="fade">بدأنا بستّ عشرة مقابلة مع مشترين ومندوبي مبيعات. تبيّن أن أكثر ما يربك المشتري ليس شكل الوحدة بل علاقتها بمحيطها: الاتجاه، الإطلالة، ومسار الشمس خلال اليوم. فبنينا التجربة حول هذه الأسئلة تحديدًا.</p>
-      <p data-anim="fade">صمّمنا مستعرضًا ثلاثي الأبعاد خفيفًا يعمل داخل المتصفح دون تنزيل، مع محاكاة ضوء تتغيّر بحسب ساعة اليوم، ومقارنة فورية بين ثلاث حزم تشطيب. كل تفاعل مصمَّم ليجيب على سؤال، لا ليستعرض التقنية.</p>
-      <p data-anim="fade">على مستوى النظام، سلّمنا مكتبة مكوّنات كاملة ثنائية الاتجاه، مع توثيق يمكّن فريق العميل من إضافة مشاريع جديدة دون العودة إلينا.</p>
-
-      <figure data-anim="frame">
-        <div class="md-poster" style="--c1:#0d2a22;--c2:#4dbd99;--c3:#8fd9bd;--c4:#000000"></div>
-      </figure>
-
-      <h2 data-anim="lines">النتيجة</h2>
-      <p data-anim="fade">انخفض متوسط زمن اتخاذ القرار من أربع زيارات إلى زيارتين، وتراجعت طلبات الإلغاء بعد التسليم بنحو الثلث خلال أول موسم بيع. الأهم بالنسبة لنا: صار فريق المبيعات يستخدم المنصة كأداة يومية لا كعرض تسويقي.</p>
-    </div>
+    <div class="md-rich" data-project-body></div>
   </div>
 
   <section class="md-works md-inverse" data-inverse>
@@ -132,29 +112,14 @@
         <h2 class="md-sechead__title" data-anim="lines">مشاريع أخرى</h2>
         <a href="work.html" class="md-btn md-btn--ghost" data-magnetic data-cursor="hidden"><span>كل المشاريع</span></a>
       </div>
-      <div class="md-worklist" data-worklist>
-        <a class="md-work" href="project.html" data-cursor="media" data-cursor-media="--c1:#0d2a22;--c2:#4dbd99;--c3:#8fd9bd;--c4:#000000">
-          <span class="md-work__no">٠٢</span><span class="md-work__name">نَبـض</span>
-          <span class="md-work__desc">تطبيق رعاية صحية يبسّط المتابعة اليومية</span>
-          <span class="md-work__meta">منتج · هوية · ٢٠٢٥</span><span class="md-work__line"></span>
-        </a>
-        <a class="md-work" href="project.html" data-cursor="media" data-cursor-media="--c1:#231f20;--c2:#404041;--c3:#7c7c7d;--c4:#000000">
-          <span class="md-work__no">٠٣</span><span class="md-work__name">تِبـر</span>
-          <span class="md-work__desc">متجر مجوهرات فاخر بتجربة شراء هادئة</span>
-          <span class="md-work__meta">تجارة · تطوير · ٢٠٢٥</span><span class="md-work__line"></span>
-        </a>
-        <a class="md-work" href="project.html" data-cursor="media" data-cursor-media="--c1:#12211f;--c2:#24baa9;--c3:#404041;--c4:#000000">
-          <span class="md-work__no">٠٤</span><span class="md-work__name">مِسـار</span>
-          <span class="md-work__desc">نظام تصميم موحّد لمنصة لوجستية</span>
-          <span class="md-work__meta">نظام تصميم · ٢٠٢٥</span><span class="md-work__line"></span>
-        </a>
-      </div>
+      <!-- ٣ مشاريع تالية بالتناوب — تُحسب تلقائيًا، لا تحتاج تحديثًا يدويًا -->
+      <div class="md-worklist" data-worklist data-projects-related></div>
     </div>
   </section>
 
   <section class="md-outro">
     <div class="md-wrap">
-      <span class="md-eyebrow" data-anim="fade">لديك تحدٍّ مشابه؟</span>
+      <span class="md-eyebrow" data-anim="fade">لديك مشروع مشابه؟</span>
       <a href="contact.html" class="md-outro__link" data-cursor="text" data-cursor-label="هيا">
         <span class="md-outro__word" data-anim="lines">لنتحدّث</span>
         <span class="md-outro__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -195,6 +160,7 @@
 </div>
 
 <div class="md-progress" aria-hidden="true"><i data-progress></i></div>
+<script src="js/projects-data.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

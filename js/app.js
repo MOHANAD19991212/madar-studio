@@ -1071,11 +1071,129 @@
   })();
 
   /* ─────────────────────────────────────────────
+     11.5 · عرض المشاريع من مصدر بيانات واحد
+     يقرأ window.NOON_PROJECTS (js/projects-data.js) ويملأ:
+     - [data-projects-grid]     شبكة الأعمال الكاملة (work.html)
+     - [data-projects-home]     أول ٦ مشاريع (index.html)
+     - [data-project-detail]    صفحة دراسة حالة واحدة حسب ?id= (project.html)
+     يعمل قبل أي وحدة أخرى في boot() حتى تجد Reveal/Parallax/Cursor
+     العناصر المُولَّدة جاهزة في DOM عند مسحها.
+     ───────────────────────────────────────────── */
+  var Projects = (function () {
+    var DATA = window.NOON_PROJECTS || [];
+
+    function metaLine(p) {
+      return p.tags[0] + ' · ' + p.tags[1] + ' · ' + p.year;
+    }
+
+    function tileHTML(p, i) {
+      var delayAttr = (i % 2 === 1) ? ' data-anim-delay="0.08"' : '';
+      var loading = (i === 0) ? 'eager' : 'lazy';
+      var tags = p.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
+      return '' +
+        '<article class="md-tile" data-anim="frame"' + delayAttr + '>' +
+          '<a href="project.html?id=' + p.id + '" class="md-tile__art" data-cursor="text" data-cursor-label="المشروع">' +
+            '<img class="md-tile__img" src="assets/work/' + p.id + '.jpg" alt="' + p.alt + '" loading="' + loading + '" data-parallax="-6">' +
+          '</a>' +
+          '<div class="md-tile__row"><h2 class="md-tile__name">' + p.name + '</h2><span class="md-tile__year">' + p.year + '</span></div>' +
+          '<p class="md-tile__desc">' + p.lead + '</p>' +
+          '<div class="md-tile__tags">' + tags + '</div>' +
+        '</article>';
+    }
+
+    function workItemHTML(p, no) {
+      return '' +
+        '<a class="md-work" href="project.html?id=' + p.id + '" data-cursor="media" ' +
+          'data-cursor-media="background-image:url(\'assets/work/' + p.id + '.jpg\');background-size:cover;background-position:center">' +
+          '<span class="md-work__no">' + toArabic(no) + '</span>' +
+          '<span class="md-work__name">' + p.name + '</span>' +
+          '<span class="md-work__desc">' + p.lead + '</span>' +
+          '<span class="md-work__meta">' + metaLine(p) + '</span>' +
+          '<span class="md-work__line"></span>' +
+        '</a>';
+    }
+
+    function renderGrid() {
+      var el = $('[data-projects-grid]');
+      if (!el) return;
+      el.innerHTML = DATA.map(tileHTML).join('');
+    }
+
+    function renderHome() {
+      var el = $('[data-projects-home]');
+      if (!el) return;
+      el.innerHTML = DATA.slice(0, 6).map(function (p, i) {
+        return workItemHTML(p, ('0' + (i + 1)).slice(-2));
+      }).join('');
+    }
+
+    function renderDetail() {
+      var root = $('[data-project-detail]');
+      if (!root || !DATA.length) return;
+
+      var params = new URLSearchParams(location.search);
+      var reqId = params.get('id');
+      var project = DATA.filter(function (p) { return p.id === reqId; })[0] || DATA[0];
+      var idx = DATA.indexOf(project);
+
+      document.title = project.name + ' — نون الاحترافية';
+      var metaDesc = $('meta[data-project-meta]');
+      if (metaDesc) metaDesc.setAttribute('content', project.lead);
+
+      var cap = $('[data-project-cap]', root);
+      if (cap) cap.textContent = project.type + ' · ' + project.year;
+
+      var h1 = $('[data-project-title]', root);
+      if (h1) h1.textContent = project.name;
+
+      var lead = $('[data-project-lead]', root);
+      if (lead) lead.textContent = project.lead;
+
+      var hero = $('[data-project-hero]', root);
+      if (hero) {
+        hero.setAttribute('src', 'assets/work/' + project.id + '.jpg');
+        hero.setAttribute('alt', project.alt);
+      }
+
+      ['type', 'sector', 'year', 'scope'].forEach(function (k) {
+        var f = $('[data-project-fact="' + k + '"]', root);
+        if (f) f.textContent = project[k];
+      });
+
+      var body = $('[data-project-body]', root);
+      if (body) {
+        body.innerHTML = project.sections.map(function (s) {
+          return '<h2 data-anim="lines">' + s.h + '</h2><p data-anim="fade">' + s.p + '</p>';
+        }).join('');
+      }
+
+      var relEl = $('[data-projects-related]', root);
+      if (relEl && DATA.length > 1) {
+        var rel = [];
+        for (var k = 1; k <= 3 && k < DATA.length; k++) rel.push(DATA[(idx + k) % DATA.length]);
+        relEl.innerHTML = rel.map(function (p, i) {
+          return workItemHTML(p, ('0' + (i + 1)).slice(-2));
+        }).join('');
+      }
+    }
+
+    return {
+      init: function () {
+        if (!DATA.length) return;
+        renderGrid();
+        renderHome();
+        renderDetail();
+      }
+    };
+  })();
+
+  /* ─────────────────────────────────────────────
      12 · الإقلاع
      ───────────────────────────────────────────── */
   function boot() {
     var skipLoader = Transition.init();          /* true إذا وصلنا عبر انتقال */
 
+    Projects.init();                              /* قبل أي مسح آخر لـ DOM */
     Cursor.init();
     LinkSwap.init();
     Header.init();

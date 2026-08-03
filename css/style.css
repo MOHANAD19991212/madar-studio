@@ -1249,7 +1249,21 @@ section:not(.md-inverse) + .md-inverse{border-radius:var(--r) var(--r) 0 0}
   transition:transform .7s var(--e);
 }
 .md-pill:hover{transform:translateY(-.4rem)}
-.md-pill__ico{font-size:1.5rem;line-height:1;opacity:.7}
+.md-pill__ico{
+  font-size:1.5rem;
+  line-height:1;
+  display:inline-block;
+  transform-origin:center;
+  animation:md-pill-pulse 3.2s ease-in-out infinite;
+}
+.md-pill:nth-child(2) .md-pill__ico{animation-delay:.4s}
+.md-pill:nth-child(3) .md-pill__ico{animation-delay:.8s}
+.md-pill:nth-child(4) .md-pill__ico{animation-delay:1.2s}
+@keyframes md-pill-pulse{
+  0%,100%{transform:scale(1);opacity:.65}
+  50%{transform:scale(1.14);opacity:1}
+}
+.md-pill__title{font-weight:600;color:var(--ink);margin-block-end:.3rem;font-size:.98rem}
 .md-pill p{font-size:.98rem;line-height:1.55;max-width:20ch}
 
 /* ─────────────────────────────────────────────
@@ -1488,6 +1502,17 @@ section:not(.md-inverse) + .md-inverse{border-radius:var(--r) var(--r) 0 0}
   margin-block-end:1.5rem;
 }
 .md-tile__art .md-poster{position:absolute;inset:-6% 0;height:112%}
+
+/* صور المشاريع الحقيقية: نفس هامش الأمان (‎-6%‎/‎112%‎) الذي يترك مساحة
+   لإزاحة الباralax دون أن تنكشف حافة الصورة أثناء التمرير */
+.md-tile__img{
+  position:absolute;
+  inset:-6% 0;
+  width:100%;
+  height:112%;
+  object-fit:cover;
+  display:block;
+}
 .md-tile__row{
   display:flex;
   align-items:baseline;
@@ -1639,6 +1664,7 @@ section:not(.md-inverse) + .md-inverse{border-radius:var(--r) var(--r) 0 0}
   margin-block-end:var(--sec);
 }
 .md-hero-art .md-poster{position:absolute;inset:-8% 0;height:116%}
+.md-hero-art__img{position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover;display:block}
 .md-facts{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));
